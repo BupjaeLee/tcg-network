@@ -1,0 +1,44 @@
+package common;
+option java_package = "bupjae.tcg.common.proto";
+option java_outer_classname = "Proto";
+option java_multiple_files = true;
+
+message CardInfoList {
+    repeated CardInfo info = 1;
+    optional PackMetadata metadata = 2;
+}
+
+message CardInfo {
+    required string serial = 1;
+    required string name = 2;
+    required string image_url = 3;
+
+    extensions 1001 to max;
+}
+
+message Deck {
+    required string loader = 1;
+    repeated Entry entry = 2;
+    optional string first_card = 3;
+
+    message Entry {
+        required string serial = 1;
+        optional int32 qty = 2 [default = 1];
+    }
+}
+
+message GameModel {
+    extensions 1001 to max;
+}
+
+message GameObject {
+    required string id = 1;
+    optional CardInfo info = 2;
+
+    extensions 1001 to max;
+}
+
+message PackMetadata {
+    required string pack_name = 1;
+    required int32 version = 2;
+}

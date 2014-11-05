@@ -1,0 +1,18 @@
+.titledBorder {
+    -fx-border-color: #676767 white white #676767, white #676767 #676767 white;
+    -fx-border-style: solid inside, solid outside;
+    -fx-border-width: 1.5;
+    -fx-border-insets: 10 5 5 5;
+    -fx-content-display: top;
+}
+
+.titledLabel {
+    -fx-background-color: white;
+    -fx-padding: 0 5 0 5;
+    -fx-translate-y: -10;
+    -fx-translate-x: 10; 
+}
+
+.titledInner {
+    -fx-padding: 10 5 5 5;
+}

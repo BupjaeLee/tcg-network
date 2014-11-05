@@ -1,0 +1,99 @@
+package chaostcg;
+import "bupjae/tcg/common/proto/common.proto";
+option java_package = "bupjae.tcg.chaostcg.proto";
+option java_outer_classname = "Proto";
+option java_multiple_files = true;
+
+
+message ChaosTcgCardInfo {
+    extend common.CardInfo {
+        optional ChaosTcgCardInfo extension = 1001;
+    }
+
+    required Title title = 1;
+    required OperatingSystem os = 2;
+    required Type type = 3;
+    repeated Element element = 4;
+    repeated Gender gender = 5;
+    optional int32 power = 6;
+    optional int32 tough = 7;
+    optional sint32 power_mod = 8;
+    optional sint32 tough_mod = 9;
+    repeated string rule_name = 10;
+    repeated string feature = 11;
+
+    enum Title {
+        CHAOS = 0;
+        PUCHIMAS = 1;
+    }
+
+    enum OperatingSystem {
+        ALL_OS = 0;
+        IDOLMASTER = 1;
+    }
+
+    enum Type {
+        CHARA = 1;
+        EVENT = 2;
+        SET = 3;
+        EXTRA = 4;
+    }
+
+    enum Element {
+        NULL = 0;
+        EARTH = 1;
+        WATER = 2;
+        FIRE = 3;
+        AIR = 4;
+        LIGHT = 5;
+        DARK = 6;
+    }
+
+    enum Gender {
+        MAN = 1;
+        WOMAN = 2;
+    }
+}
+
+message ChaosTcgGameModel {
+    extend common.GameModel {
+        optional ChaosTcgGameModel extension = 1001;
+    }
+
+    message Player {
+        required string nickname = 1;
+        required Board board = 2;
+    }
+
+    message Board {
+        repeated common.GameObject mainDeck = 1;
+        repeated common.GameObject extraDeck = 2;
+        repeated common.GameObject extraDeckFaceUp = 3;
+        repeated common.GameObject hand = 4;
+        repeated common.GameObject waitingRoom = 5;
+        repeated common.GameObject backyard = 6;
+        optional Character partner = 7;
+        repeated Character friend = 8;
+    }
+
+    message Character {
+        repeated common.GameObject character = 1;
+        repeated common.GameObject level = 2;
+        repeated common.GameObject set = 3;
+        optional Face face = 4 [default = UP];
+        optional Position position = 5 [default = STAND];
+    }
+
+    enum Face {
+        UP = 0;
+        DOWN = 1;
+    }
+
+    enum Position {
+        STAND = 0;
+        REST = 1;
+        REVERSE = 2;
+    }
+
+    repeated Player player = 1;
+}

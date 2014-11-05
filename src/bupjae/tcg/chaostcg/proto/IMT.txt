@@ -1,0 +1,306 @@
+metadata {
+  pack_name: "IMT"
+  version: 1
+}
+info {
+  serial: "IM-T01"
+  name: "항상 척척, 견실한 사람! 「아키츠키 리츠코」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10001.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: CHARA
+    element: FIRE
+    gender: WOMAN
+    power: 4
+    tough: 4
+    power_mod: 2
+    tough_mod: 2
+    rule_name: "아키츠키 리츠코"
+  }
+}
+info {
+  serial: "IM-T02"
+  name: "사무 일이 자신 있는 \"푸치돌\" 「칫짱」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10002.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: CHARA
+    element: FIRE
+    gender: WOMAN
+    power: 3
+    tough: 4
+    power_mod: 1
+    tough_mod: 2
+    rule_name: "칫짱"
+    feature: "푸치돌"
+  }
+}
+info {
+  serial: "IM-T03"
+  name: "본성의 꿋꿋함은 제일 「하기와라 유키호」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10003.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: CHARA
+    element: LIGHT
+    gender: WOMAN
+    power: 0
+    tough: 1
+    power_mod: 2
+    tough_mod: 3
+    rule_name: "하기와라 유키호"
+  }
+}
+info {
+  serial: "IM-T04"
+  name: "푸치 드릴러인 \"푸치돌\" 「유키포」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10004.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: CHARA
+    element: LIGHT
+    gender: WOMAN
+    power: 2
+    tough: 1
+    power_mod: 2
+    tough_mod: 3
+    rule_name: "유키포"
+    feature: "푸치돌"
+  }
+}
+info {
+  serial: "IM-T05"
+  name: "노래에 모든 것을 바친다 「키사라기 치하야」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10005.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: CHARA
+    element: WATER
+    gender: WOMAN
+    power: 0
+    tough: 1
+    power_mod: 2
+    tough_mod: 3
+    rule_name: "키사라기 치하야"
+  }
+}
+info {
+  serial: "IM-T06"
+  name: "노래하는 것이 정말 좋은 \"푸치돌\" 「치햐」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10006.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: CHARA
+    element: WATER
+    gender: WOMAN
+    power: 6
+    tough: 2
+    power_mod: 1
+    tough_mod: 0
+    rule_name: "치햐"
+    feature: "푸치돌"
+  }
+}
+info {
+  serial: "IM-T07"
+  name: "소악마계 여자 아이 「호시이 미키」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10007.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: CHARA
+    element: AIR
+    gender: WOMAN
+    power: 1
+    tough: 1
+    power_mod: 2
+    tough_mod: 3
+    rule_name: "호시이 미키"
+  }
+}
+info {
+  serial: "IM-T08"
+  name: "주먹밥과 잠자는 것이 가장 좋은 \"푸치돌\" 「아후」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10008.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: CHARA
+    element: AIR
+    gender: WOMAN
+    power: 0
+    tough: 1
+    power_mod: 3
+    tough_mod: 2
+    rule_name: "아후"
+    feature: "푸치돌"
+  }
+}
+info {
+  serial: "IM-T09"
+  name: "깨물기를 좋아하는 \"푸치돌\" 「하루카씨」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10009.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: CHARA
+    element: LIGHT
+    element: DARK
+    gender: WOMAN
+    power: 8
+    tough: 2
+    power_mod: 1
+    tough_mod: 0
+    rule_name: "하루카씨"
+    feature: "푸치돌"
+  }
+}
+info {
+  serial: "IM-T10"
+  name: "코아미 & 코마미의 장난"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10010.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: EVENT
+  }
+}
+info {
+  serial: "IM-T11"
+  name: "우는 얼굴 마코치"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10011.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: EVENT
+  }
+}
+info {
+  serial: "IM-T12"
+  name: "유능한 일꾼 피요피요"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10012.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: EVENT
+  }
+}
+info {
+  serial: "IM-T13"
+  name: "미우라씨 낮잠"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10013.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: EVENT
+  }
+}
+info {
+  serial: "IM-T14"
+  name: "먹히는 치비키!?"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10014.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: EVENT
+  }
+}
+info {
+  serial: "IM-T15"
+  name: "이오의 봉제인형"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10015.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: SET
+    power_mod: 0
+    tough_mod: 3
+  }
+}
+info {
+  serial: "IM-T16"
+  name: "식빵 1년분 야요"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10016.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: SET
+    power_mod: 3
+    tough_mod: 1
+  }
+}
+info {
+  serial: "IM-T17"
+  name: "식사중 타카냐"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10017.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: SET
+    power_mod: 2
+    tough_mod: 0
+  }
+}
+info {
+  serial: "IM-T18"
+  name: "점잖은 콤비 「하기와라 유키호」 & \"푸치돌\" 「유키포」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10018.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: EXTRA
+    element: LIGHT
+    gender: WOMAN
+    power: 5
+    tough: 5
+    power_mod: 1
+    tough_mod: 1
+    rule_name: "하기와라 유키호"
+    rule_name: "유키포"
+    feature: "푸치돌"
+  }
+}
+info {
+  serial: "IM-T19"
+  name: "노래하는 것이 정말 좋은 콤비 「키사라키 치하야」 & \"푸치돌\" 「치햐」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10019.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: EXTRA
+    element: WATER
+    gender: WOMAN
+    power: 4
+    tough: 4
+    power_mod: 2
+    tough_mod: 0
+    rule_name: "키사라기 치하야"
+    rule_name: "치햐"
+    feature: "푸치돌"
+  }
+}
+info {
+  serial: "IM-T20"
+  name: "난폭자 콤비 「호시이 미키」 & \"푸치돌\" 「아후」"
+  image_url: "http://user.chol.com/~bupjae/tcgmanager/images/chaos/puchi/puchi-10020.jpg"
+  [chaostcg.ChaosTcgCardInfo.extension] {
+    title: PUCHIMAS
+    os: IDOLMASTER
+    type: EXTRA
+    element: AIR
+    gender: WOMAN
+    power: 6
+    tough: 2
+    power_mod: 1
+    tough_mod: 1
+    rule_name: "호시이 미키"
+    rule_name: "아후"
+    feature: "푸치돌"
+  }
+}

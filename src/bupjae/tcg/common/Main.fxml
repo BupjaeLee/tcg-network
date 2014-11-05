@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import bupjae.tcg.control.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.beans.property.adapter.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.web.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="bupjae.tcg.common.MainController">
+    <top>
+        <MenuBar fx:id="menu">
+            <Menu text="파일(_F)">
+                <MenuItem text="새 덱(_N)"/>
+                <MenuItem text="덱 열기(_O)..." onAction="#openDeck"/>
+                <MenuItem text="덱 저장(_S)"/>
+                <MenuItem text="다른 이름으로 저장(_A)..."/>
+                <SeparatorMenuItem/>
+                <MenuItem text="덱 레시피 이미지 저장(_R)..."/>
+                <SeparatorMenuItem/>
+                <MenuItem text="종료(_X)"/>
+            </Menu>
+            <Menu text="도구(_T)">
+                <MenuItem text="보드 테스트...(_T)" onAction="#boardTest"/>
+            </Menu>
+        </MenuBar>
+    </top>
+    <center>
+        <RatioSplitPane orientation="HORIZONTAL" dividerPositions="0.8">
+            <RatioSplitPane orientation="VERTICAL" minWidth="0" minHeight="0" prefWidth="0">
+                <TableView fx:id="masterTable">
+                    <columns>
+                        <TableColumn text="일련번호">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="serial"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="이름">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="name"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+                <TableView fx:id="userTable" editable="true" >
+                    <columns>
+                        <TableColumn text="일련번호" editable="false"  >
+                            <cellValueFactory>
+                                <PropertyValueFactory property="serial"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="이름" editable="false" >
+                            <cellValueFactory>
+                                <PropertyValueFactory property="name"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="개수" editable="true">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="qty"/>
+                            </cellValueFactory>
+                            <cellFactory>
+                                <bupjae.tcg.common.TableCellFactory fx:factory="forInteger"/>
+                            </cellFactory>
+                        </TableColumn>
+                        <TableColumn text="시작 카드?" editable="true" >
+                            <cellValueFactory>
+                                <PropertyValueFactory property="firstCard"/>
+                            </cellValueFactory>
+                            <cellFactory>
+                                <bupjae.tcg.common.TableCellFactory fx:factory="forBoolean"/>
+                            </cellFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+            </RatioSplitPane>
+            <StackPane fx:id="cardContainer" minWidth="0" minHeight="0" prefWidth="0">
+                <ImageView fx:id="cardView"  preserveRatio="true" fitHeight="${cardContainer.height}" fitWidth="${cardContainer.width}"/>
+            </StackPane>
+        </RatioSplitPane>
+    </center>
+</BorderPane>
