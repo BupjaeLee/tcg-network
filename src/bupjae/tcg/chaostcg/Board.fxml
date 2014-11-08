@@ -23,88 +23,81 @@
                     <ColumnConstraints fillWidth="true" percentWidth="100"/>
                 </columnConstraints>
                 <bupjae.tcg.control.TitledBorder title="상대" GridPane.rowIndex="0" GridPane.columnIndex="0">
-                    <VBox>
-                        <GridPane VBox.vgrow="NEVER" prefHeight="140">
+                    <HBox>
+                        <bupjae.tcg.control.TitledBorder HBox.hgrow="NEVER" prefWidth="150" minWidth="150" title="기타">
+                            <GridPane fx:id="opponentStatus" vgap="10">
+                                <rowConstraints>
+                                    <RowConstraints fillHeight="true" percentHeight="100"/>
+                                    <RowConstraints fillHeight="true" percentHeight="100"/>
+                                    <RowConstraints fillHeight="true" percentHeight="100"/>
+                                    <RowConstraints fillHeight="true" percentHeight="100"/>
+                                </rowConstraints>
+                                <columnConstraints>
+                                    <ColumnConstraints fillWidth="true" percentWidth="100"/>
+                                </columnConstraints>
+                                <Button text="${'엑스트라 덱 ('+opponentBoard.extraDeckSize+'+'+opponentBoard.extraDeckFaceUpSize+')'}" GridPane.rowIndex="0" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
+                                <Button text="${'메인 덱 ('+opponentBoard.mainDeckSize+')'}" GridPane.rowIndex="1" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
+                                <Button text="${'대기실 ('+opponentBoard.waitingRoomSize+')'}" GridPane.rowIndex="2" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
+                                <Button text="${'백야드 ('+opponentBoard.backyardSize+')'}" GridPane.rowIndex="3" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
+                            </GridPane>
+                        </bupjae.tcg.control.TitledBorder>
+                        <GridPane HBox.hgrow="ALWAYS">
                             <rowConstraints>
+                                <RowConstraints fillHeight="true" percentHeight="150"/>
+                                <RowConstraints fillHeight="true" percentHeight="100"/>
+                                <RowConstraints fillHeight="true" percentHeight="100"/>
+                                <RowConstraints fillHeight="true" percentHeight="100"/>
                                 <RowConstraints fillHeight="true" percentHeight="100"/>
                             </rowConstraints>
                             <columnConstraints>
-                                <ColumnConstraints fillWidth="true" hgrow="NEVER" prefWidth="150"/>
-                                <ColumnConstraints fillWidth="true" hgrow="ALWAYS"/>
+                                <ColumnConstraints fillWidth="true" percentWidth="100"/>
+                                <ColumnConstraints fillWidth="true" percentWidth="100"/>
+                                <ColumnConstraints fillWidth="true" percentWidth="100"/>
                             </columnConstraints>
-                            <bupjae.tcg.control.TitledBorder title="테스트1" GridPane.rowIndex="0" GridPane.columnIndex="0">
-                                <GridPane fx:id="opponentStatus" vgap="5">
-                                    <rowConstraints>
-                                        <RowConstraints fillHeight="true" percentHeight="100"/>
-                                        <RowConstraints fillHeight="true" percentHeight="100"/>
-                                        <RowConstraints fillHeight="true" percentHeight="100"/>
-                                        <RowConstraints fillHeight="true" percentHeight="100"/>
-                                    </rowConstraints>
-                                    <columnConstraints>
-                                        <ColumnConstraints fillWidth="true" percentWidth="100"/>
-                                    </columnConstraints>
-                                    <Button text="${'엑스트라 덱 ('+opponentBoard.extraDeckSize+'+'+opponentBoard.extraDeckFaceUpSize+')'}" GridPane.rowIndex="0" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
-                                    <Button text="${'메인 덱 ('+opponentBoard.mainDeckSize+')'}" GridPane.rowIndex="1" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
-                                    <Button text="${'대기실 ('+opponentBoard.waitingRoomSize+')'}" GridPane.rowIndex="2" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
-                                    <Button text="${'백야드 ('+opponentBoard.backyardSize+')'}" GridPane.rowIndex="3" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
-                                </GridPane>
+                            <bupjae.tcg.control.TitledBorder title="파트너" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.rowSpan="2">
+                                <bupjae.tcg.chaostcg.CharacterPane character="${opponentBoard.partner}"/>
                             </bupjae.tcg.control.TitledBorder>
-                            <bupjae.tcg.control.TitledBorder title="손패" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                            <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="3" GridPane.columnIndex="2" GridPane.rowSpan="2">
+                                <bupjae.tcg.chaostcg.CharacterPane character="${opponentBoard.friend[0]}"/>
+                            </bupjae.tcg.control.TitledBorder>
+                            <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="1" GridPane.columnIndex="2" GridPane.rowSpan="2">
+                                <bupjae.tcg.chaostcg.CharacterPane character="${opponentBoard.friend[1]}"/>
+                            </bupjae.tcg.control.TitledBorder>
+                            <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.rowSpan="2">
+                                <bupjae.tcg.chaostcg.CharacterPane character="${opponentBoard.friend[2]}"/>
+                            </bupjae.tcg.control.TitledBorder>
+                            <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.rowSpan="2">
+                                <bupjae.tcg.chaostcg.CharacterPane character="${opponentBoard.friend[3]}"/>
+                            </bupjae.tcg.control.TitledBorder>
+                            <bupjae.tcg.control.TitledBorder title="손패" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="3" >
                                 <bupjae.tcg.chaostcg.HandPane hand="${opponentBoard.hand}"/>
                             </bupjae.tcg.control.TitledBorder>
                         </GridPane>
-                        <GridPane VBox.vgrow="ALWAYS">
-                            <rowConstraints>
-                                <RowConstraints fillHeight="true" percentHeight="100"/>
-                                <RowConstraints fillHeight="true" percentHeight="100"/>
-                                <RowConstraints fillHeight="true" percentHeight="100"/>
-                                <RowConstraints fillHeight="true" percentHeight="100"/>
-                            </rowConstraints>
-                            <columnConstraints>
-                                <ColumnConstraints fillWidth="true" percentWidth="100"/>
-                                <ColumnConstraints fillWidth="true" percentWidth="100"/>
-                                <ColumnConstraints fillWidth="true" percentWidth="100"/>
-                            </columnConstraints>
-                            <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.rowSpan="2">
-                                <bupjae.tcg.chaostcg.CharacterPane character="${opponentBoard.friend[3]}"/>
-                            </bupjae.tcg.control.TitledBorder>
-                            <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.rowSpan="2">
-                                <bupjae.tcg.chaostcg.CharacterPane character="${opponentBoard.friend[2]}"/>
-                            </bupjae.tcg.control.TitledBorder>
-                            <bupjae.tcg.control.TitledBorder title="파트너" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.rowSpan="2">
-                                <bupjae.tcg.chaostcg.CharacterPane character="${opponentBoard.partner}"/>
-                            </bupjae.tcg.control.TitledBorder>
-                            <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="0" GridPane.columnIndex="2" GridPane.rowSpan="2">
-                                <bupjae.tcg.chaostcg.CharacterPane character="${opponentBoard.friend[1]}"/>
-                            </bupjae.tcg.control.TitledBorder>
-                            <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="2" GridPane.columnIndex="2" GridPane.rowSpan="2">
-                                <bupjae.tcg.chaostcg.CharacterPane character="${opponentBoard.friend[0]}"/>
-                            </bupjae.tcg.control.TitledBorder>
-                        </GridPane>
-                    </VBox>
+                    </HBox>
                 </bupjae.tcg.control.TitledBorder>
                 <bupjae.tcg.control.TitledBorder title="자신" GridPane.rowIndex="1" GridPane.columnIndex="0">
-                    <VBox>
-                        <GridPane VBox.vgrow="ALWAYS">
+                    <HBox>
+                        <GridPane HBox.hgrow="ALWAYS">
                             <rowConstraints>
                                 <RowConstraints fillHeight="true" percentHeight="100"/>
                                 <RowConstraints fillHeight="true" percentHeight="100"/>
                                 <RowConstraints fillHeight="true" percentHeight="100"/>
                                 <RowConstraints fillHeight="true" percentHeight="100"/>
+                                <RowConstraints fillHeight="true" percentHeight="150"/>
                             </rowConstraints>
                             <columnConstraints>
                                 <ColumnConstraints fillWidth="true" percentWidth="100"/>
                                 <ColumnConstraints fillWidth="true" percentWidth="100"/>
                                 <ColumnConstraints fillWidth="true" percentWidth="100"/>
                             </columnConstraints>
+                            <bupjae.tcg.control.TitledBorder title="파트너" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.rowSpan="2">
+                                <bupjae.tcg.chaostcg.CharacterPane character="${myBoard.partner}"/>
+                            </bupjae.tcg.control.TitledBorder>
                             <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.rowSpan="2">
                                 <bupjae.tcg.chaostcg.CharacterPane character="${myBoard.friend[0]}"/>
                             </bupjae.tcg.control.TitledBorder>
                             <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.rowSpan="2">
                                 <bupjae.tcg.chaostcg.CharacterPane character="${myBoard.friend[1]}"/>
-                            </bupjae.tcg.control.TitledBorder>
-                            <bupjae.tcg.control.TitledBorder title="파트너" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.rowSpan="2">
-                                <bupjae.tcg.chaostcg.CharacterPane character="${myBoard.partner}"/>
                             </bupjae.tcg.control.TitledBorder>
                             <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="0" GridPane.columnIndex="2" GridPane.rowSpan="2">
                                 <bupjae.tcg.chaostcg.CharacterPane character="${myBoard.friend[2]}"/>
@@ -112,37 +105,28 @@
                             <bupjae.tcg.control.TitledBorder title="프랜드" GridPane.rowIndex="2" GridPane.columnIndex="2" GridPane.rowSpan="2">
                                 <bupjae.tcg.chaostcg.CharacterPane character="${myBoard.friend[3]}"/>
                             </bupjae.tcg.control.TitledBorder>
-                        </GridPane>
-                        <GridPane VBox.vgrow="NEVER" prefHeight="140">
-                            <rowConstraints>
-                                <RowConstraints fillHeight="true" percentHeight="100"/>
-                            </rowConstraints>
-                            <columnConstraints>
-                                <ColumnConstraints fillWidth="true" hgrow="NEVER" prefWidth="150"/>
-                                <ColumnConstraints fillWidth="true" hgrow="ALWAYS"/>
-                            </columnConstraints>
-                            <bupjae.tcg.control.TitledBorder title="테스트1" GridPane.rowIndex="0" GridPane.columnIndex="0">
-                                <GridPane fx:id="myStatus" vgap="5">
-                                    <rowConstraints>
-                                        <RowConstraints fillHeight="true" percentHeight="100"/>
-                                        <RowConstraints fillHeight="true" percentHeight="100"/>
-                                        <RowConstraints fillHeight="true" percentHeight="100"/>
-                                        <RowConstraints fillHeight="true" percentHeight="100"/>
-                                    </rowConstraints>
-                                    <columnConstraints>
-                                        <ColumnConstraints fillWidth="true" percentWidth="100"/>
-                                    </columnConstraints>
-                                    <Button text="${'엑스트라 덱 ('+myBoard.extraDeckSize+'+'+myBoard.extraDeckFaceUpSize+')'}" GridPane.rowIndex="0" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
-                                    <Button text="${'메인 덱 ('+myBoard.mainDeckSize+')'}" GridPane.rowIndex="1" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
-                                    <Button text="${'대기실 ('+myBoard.waitingRoomSize+')'}" GridPane.rowIndex="2" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity" onAction="#test"/>
-                                    <Button text="${'백야드 ('+myBoard.backyardSize+')'}" GridPane.rowIndex="3" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
-                                </GridPane>
-                            </bupjae.tcg.control.TitledBorder>
-                            <bupjae.tcg.control.TitledBorder title="손패" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                            <bupjae.tcg.control.TitledBorder title="손패" GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="3" >
                                 <bupjae.tcg.chaostcg.HandPane hand="${myBoard.hand}"/>
                             </bupjae.tcg.control.TitledBorder>
                         </GridPane>
-                    </VBox>
+                        <bupjae.tcg.control.TitledBorder HBox.hgrow="NEVER" prefWidth="150" minWidth="150" title="기타">
+                            <GridPane fx:id="myStatus" vgap="10">
+                                <rowConstraints>
+                                    <RowConstraints fillHeight="true" percentHeight="100"/>
+                                    <RowConstraints fillHeight="true" percentHeight="100"/>
+                                    <RowConstraints fillHeight="true" percentHeight="100"/>
+                                    <RowConstraints fillHeight="true" percentHeight="100"/>
+                                </rowConstraints>
+                                <columnConstraints>
+                                    <ColumnConstraints fillWidth="true" percentWidth="100"/>
+                                </columnConstraints>
+                                <Button text="${'엑스트라 덱 ('+myBoard.extraDeckSize+'+'+myBoard.extraDeckFaceUpSize+')'}" GridPane.rowIndex="0" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
+                                <Button text="${'메인 덱 ('+myBoard.mainDeckSize+')'}" GridPane.rowIndex="1" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
+                                <Button text="${'대기실 ('+myBoard.waitingRoomSize+')'}" GridPane.rowIndex="2" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity" onAction="#test"/>
+                                <Button text="${'백야드 ('+myBoard.backyardSize+')'}" GridPane.rowIndex="3" GridPane.columnIndex="0" maxHeight="Infinity" maxWidth="Infinity"/>
+                            </GridPane>
+                        </bupjae.tcg.control.TitledBorder>
+                    </HBox>
                 </bupjae.tcg.control.TitledBorder>
             </GridPane>
             <bupjae.tcg.control.RatioSplitPane orientation="VERTICAL" dividerPositions="0.5">
