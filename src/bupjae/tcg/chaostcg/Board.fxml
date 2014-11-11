@@ -10,7 +10,7 @@
     <fx:define>
         <bupjae.tcg.chaostcg.BoardBean fx:id="myBoard"/>
         <bupjae.tcg.chaostcg.BoardBean fx:id="opponentBoard"/>
-        <bupjae.tcg.control.GameObjectTooltip fx:id="tooltip" fx:factory="getInstance"/>
+    <bupjae.tcg.control.GameObjectTooltip fx:id="tooltip" fx:factory="getInstance"/>
     </fx:define>
     <center>
         <bupjae.tcg.control.RatioSplitPane orientation="HORIZONTAL" dividerPositions="0.8">
@@ -135,9 +135,7 @@
                 </StackPane>
                 <BorderPane>
                     <center>
-                        <ScrollPane fitToHeight="true" fitToWidth="true">
-                            <javafx.scene.web.WebView />
-                        </ScrollPane>
+                        <javafx.scene.web.WebView fx:id="logView"/>
                     </center>
                     <bottom>
                         <TextField />                        

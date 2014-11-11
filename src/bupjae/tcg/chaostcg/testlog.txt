@@ -1,0 +1,24 @@
+log {
+    game {
+        span { nickname: "venusaur" }
+        span { text: "님이 입장하셨습니다." }
+    }
+}
+log {
+    game {
+        span { nickname: "ivysaur" }
+        span { text: "님이 입장하셨습니다." }
+    }
+}
+log {
+    chat {
+        nickname: "venusaur"
+        text: "Hi!"
+    }
+}
+log {
+    chat {
+        nickname: "ivysaur"
+        text: "Hello"
+    }
+}

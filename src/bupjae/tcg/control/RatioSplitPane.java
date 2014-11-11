@@ -15,6 +15,8 @@ import javafx.scene.control.SplitPane;
  */
 public class RatioSplitPane extends SplitPane {
 
+    private boolean toRestore;
+
     public RatioSplitPane() {
         initialize();
     }
@@ -25,9 +27,14 @@ public class RatioSplitPane extends SplitPane {
     }
 
     private void preserveDividerPosition(Observable o) {
+        if (toRestore) {
+            return;
+        }
         double[] backupDividerPosition = getDividerPositions();
+        toRestore = true;
         Platform.runLater(() -> {
             setDividerPositions(backupDividerPosition);
+            toRestore = false;
         });
     }
 }
