@@ -12,7 +12,7 @@
 <?import javafx.scene.control.cell.*?>
 <?import javafx.scene.web.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="bupjae.tcg.common.MainController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="bupjae.tcg.common.MainController" fx:id="root">
     <top>
         <MenuBar fx:id="menu">
             <Menu text="파일(_F)">

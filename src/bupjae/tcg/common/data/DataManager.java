@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.BooleanPropertyBase;
@@ -40,34 +41,49 @@ import javafx.collections.ObservableList;
  */
 public class DataManager {
 
-    private static final ExtensionRegistry registry;
+    public static final Object CURRENT_DATA_MANAGER_KEY = new Object();
+
+    private final ExtensionRegistry registry;
     private final ObservableList<CardInfo> master;
     private final Map<String, CardInfo> masterLookup;
     private final DeckWrapper deck;
 
-    static {
-        ExtensionRegistry r = ExtensionRegistry.newInstance();
-        bupjae.tcg.common.proto.Proto.registerAllExtensions(r);
-        bupjae.tcg.chaostcg.proto.Proto.registerAllExtensions(r);
-        registry = r.getUnmodifiable();
-    }
+    public static class Builder {
 
-    public DataManager(String... resources) {
-        ObservableList<CardInfo> theMaster = FXCollections.observableArrayList();
-        Map<String, CardInfo> theLookup = new HashMap<>();
-        for (String r : resources) {
+        private final ExtensionRegistry registry = ExtensionRegistry.newInstance();
+        private final ObservableList<CardInfo> master = FXCollections.observableArrayList();
+        private final Map<String, CardInfo> masterLookup = new HashMap<>();
+
+        public Builder registerExtension(Consumer<ExtensionRegistry> callback) {
+            callback.accept(registry);
+            return this;
+        }
+
+        public Builder load(String resource) {
             try {
-                CardInfoList s = readResource(r);
-                theMaster.addAll(s.getInfoList());
+                CardInfoList.Builder s = readResource(registry, resource);
+                master.addAll(s.getInfoList());
                 s.getInfoList().stream().forEach(c -> {
-                    theLookup.put(c.getSerial(), c);
+                    masterLookup.put(c.getSerial(), c);
                 });
             } catch (IOException ex) {
                 System.err.println(ex);
             }
+            return this;
         }
-        this.master = FXCollections.unmodifiableObservableList(theMaster);
-        this.masterLookup = Collections.unmodifiableMap(theLookup);
+
+        public DataManager build() {
+            return new DataManager(
+                    registry.getUnmodifiable(),
+                    FXCollections.unmodifiableObservableList(master),
+                    Collections.unmodifiableMap(masterLookup));
+        }
+    }
+
+    private DataManager(ExtensionRegistry registry, ObservableList<CardInfo> master, Map<String, CardInfo> masterLookup) {
+        this.registry = registry;
+        this.master = master;
+        this.masterLookup = masterLookup;
         this.deck = new DeckWrapper();
     }
 
@@ -75,16 +91,16 @@ public class DataManager {
         return masterLookup.get(id);
     }
 
-    private static CardInfoList readResource(String resource) throws IOException {
+    private static CardInfoList.Builder readResource(ExtensionRegistry registry, String resource) throws IOException {
         try (InputStream is = MainController.class.getResourceAsStream(resource);
                 Reader r = new InputStreamReader(is, "UTF-8")) {
             CardInfoList.Builder builder = CardInfoList.newBuilder();
             com.google.protobuf.TextFormat.merge(r, registry, builder);
-            return builder.build();
+            return builder;
         }
     }
 
-    public static ExtensionRegistry getRegistry() {
+    public ExtensionRegistry getRegistry() {
         return registry;
     }
 

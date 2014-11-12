@@ -22,19 +22,18 @@ public class TcgNetworks extends Application {
 
     @Override
     public void init() throws Exception {
-        dataManager = new DataManager("/bupjae/tcg/chaostcg/proto/IMT.txt");
+        dataManager = new DataManager.Builder()
+                .registerExtension(bupjae.tcg.chaostcg.proto.Proto::registerAllExtensions)
+                .load("/bupjae/tcg/chaostcg/proto/IMT.txt")
+                .build();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-
-        loader.<MainController>getController().setDataManager(dataManager);
-        loader.<MainController>getController().setStage(stage);
+        Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+        root.getProperties().put(DataManager.CURRENT_DATA_MANAGER_KEY, dataManager);
         stage.setMaximized(true);
-        stage.setScene(scene);
+        stage.setScene(new Scene(root));
         stage.show();
     }
 

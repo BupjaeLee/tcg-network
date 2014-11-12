@@ -11,6 +11,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,29 +35,31 @@ import javafx.stage.StageStyle;
 public class MainController implements Initializable {
 
     @FXML
+    private BorderPane root;
+    @FXML
     private TableView<CardInfo> masterTable;
     @FXML
     private TableView<DataManager.DeckWrapper.EntryWrapper> userTable;
     @FXML
     private ImageView cardView;
 
+    private final ObjectProperty<DataManager> dataManager = new SimpleObjectProperty<>(this, "dataManager");
     private FileChooser userFileChooser;
-    private DataManager dataManager;
-    private Stage stage;
-
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public void setDataManager(DataManager dataManager) {
-        this.dataManager = dataManager;
-        masterTable.setItems(dataManager.getMaster());
-        userTable.setItems(dataManager.getDeck());
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        dataManager.addListener((o, oldValue, newValue) -> {
+            if (newValue == null) {
+                masterTable.setItems(FXCollections.emptyObservableList());
+                userTable.setItems(FXCollections.emptyObservableList());
+            } else {
+                masterTable.setItems(newValue.getMaster());
+                userTable.setItems(newValue.getDeck());
+            }
+        });
+        dataManager.bind(Bindings.createObjectBinding(
+                () -> (DataManager) root.getProperties().get(DataManager.CURRENT_DATA_MANAGER_KEY),
+                root.getProperties()));
         userFileChooser = new FileChooser();
         userFileChooser.getExtensionFilters().setAll(
                 new FileChooser.ExtensionFilter("덱 파일 (*.dek)", "*.dek"),
@@ -75,24 +82,23 @@ public class MainController implements Initializable {
 
     @FXML
     private void openDeck() throws IOException {
-        File file = userFileChooser.showOpenDialog(stage);
+        File file = userFileChooser.showOpenDialog(root.getScene().getWindow());
         if (file == null) {
             return;
         }
-        dataManager.readDeck(file);
+        dataManager.get().readDeck(file);
     }
 
     @FXML
     private void boardTest() throws IOException {
         Stage boardStage = new Stage();
-        boardStage.initOwner(stage);
+        boardStage.initOwner(root.getScene().getWindow());
         boardStage.initModality(Modality.WINDOW_MODAL);
         boardStage.initStyle(StageStyle.UTILITY);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/bupjae/tcg/chaostcg/Board.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        boardStage.setScene(scene);
+        Parent boardRoot = FXMLLoader.load(getClass().getResource("/bupjae/tcg/chaostcg/Board.fxml"));
+        boardRoot.getProperties().put(DataManager.CURRENT_DATA_MANAGER_KEY, dataManager.get());
+        boardStage.setScene(new Scene(boardRoot));
         boardStage.setMaximized(true);
         boardStage.show();
     }

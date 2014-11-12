@@ -9,11 +9,13 @@ import bupjae.tcg.chaostcg.proto.ChaosTcgGameModel.Board;
 import bupjae.tcg.common.data.DataManager;
 import bupjae.tcg.common.proto.LogMessages;
 import bupjae.tcg.control.GameObjectListView;
+import com.google.protobuf.ExtensionRegistry;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Worker;
@@ -35,18 +37,34 @@ import org.controlsfx.control.PopOver;
 public class BoardController implements Initializable {
 
     @FXML
-    private BoardBean myBoard;
+    private BorderPane root;
     @FXML
-    private BorderPane main;
+    private BoardBean myBoard;
     @FXML
     private WebView logView;
     private WebEngine logWebEngine;
-    
+
     private final ObjectProperty<JSObject> window = new SimpleObjectProperty<>(this, "window");
+    private final ObjectProperty<DataManager> dataManager = new SimpleObjectProperty<>(this, "dataManager");
+    private final ObjectProperty<ExtensionRegistry> registry = new SimpleObjectProperty<>(this, "registry");
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        setTestData();
+        registry.addListener((o, oldValue, newValue) -> {
+            if (newValue != null) {
+                setTestData();
+            }
+        });
+        dataManager.addListener((o, oldValue, newValue) -> {
+            if (newValue != null) {
+                registry.set(newValue.getRegistry());
+            } else {
+                registry.set(null);
+            }
+        });
+        dataManager.bind(Bindings.createObjectBinding(
+                () -> (DataManager) root.getProperties().get(DataManager.CURRENT_DATA_MANAGER_KEY),
+                root.getProperties()));
 
         window.addListener((o, oldValue, newValue) -> {
             if (newValue == null) {
@@ -55,7 +73,7 @@ public class BoardController implements Initializable {
             LogMessages.Builder builder = LogMessages.newBuilder();
             try (InputStream is = BoardController.class.getResourceAsStream("testlog.txt");
                     Reader r = new InputStreamReader(is, "UTF-8")) {
-                com.google.protobuf.TextFormat.merge(r, DataManager.getRegistry(), builder);
+                com.google.protobuf.TextFormat.merge(r, builder);
                 newValue.call("addLogMessages", builder);
             } catch (Exception ex) {
                 System.err.println(ex);
@@ -76,7 +94,7 @@ public class BoardController implements Initializable {
         Board.Builder builder = Board.newBuilder();
         try (InputStream is = BoardController.class.getResourceAsStream("testboard.txt");
                 Reader r = new InputStreamReader(is, "UTF-8")) {
-            com.google.protobuf.TextFormat.merge(r, DataManager.getRegistry(), builder);
+            com.google.protobuf.TextFormat.merge(r, registry.get(), builder);
             myBoard.set(builder);
         } catch (Exception ex) {
             System.err.println(ex);

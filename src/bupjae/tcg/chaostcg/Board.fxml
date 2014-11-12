@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="bupjae.tcg.chaostcg.BoardController" fx:id="main">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="bupjae.tcg.chaostcg.BoardController" fx:id="root">
     <fx:define>
         <bupjae.tcg.chaostcg.BoardBean fx:id="myBoard"/>
         <bupjae.tcg.chaostcg.BoardBean fx:id="opponentBoard"/>
