@@ -27,6 +27,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.fxmisc.easybind.EasyBind;
 
 /**
  *
@@ -48,35 +49,35 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        dataManager.addListener((o, oldValue, newValue) -> {
-            if (newValue == null) {
+        EasyBind.subscribe(dataManager, value -> {
+            if (value == null) {
                 masterTable.setItems(FXCollections.emptyObservableList());
                 userTable.setItems(FXCollections.emptyObservableList());
             } else {
-                masterTable.setItems(newValue.getMaster());
-                userTable.setItems(newValue.getDeck());
+                masterTable.setItems(value.getMaster());
+                userTable.setItems(value.getDeck());
             }
         });
-        dataManager.bind(Bindings.createObjectBinding(
-                () -> (DataManager) root.getProperties().get(DataManager.CURRENT_DATA_MANAGER_KEY),
-                root.getProperties()));
+        dataManager.bind(EasyBind.map(
+                Bindings.valueAt(root.getProperties(), DataManager.CURRENT_DATA_MANAGER_KEY),
+                o -> (DataManager) o));
         userFileChooser = new FileChooser();
         userFileChooser.getExtensionFilters().setAll(
                 new FileChooser.ExtensionFilter("덱 파일 (*.dek)", "*.dek"),
                 new FileChooser.ExtensionFilter("모든 파일 (*.*)", "*.*")
         );
         userFileChooser.setSelectedExtensionFilter(userFileChooser.getExtensionFilters().get(0));
-        masterTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null) {
+        EasyBind.subscribe(masterTable.getSelectionModel().selectedItemProperty(), v -> {
+            if (v == null) {
                 return;
             }
-            cardView.setImage(ImageCache.getImage(newValue.getImageUrl()));
+            cardView.setImage(ImageCache.getImage(v.getImageUrl()));
         });
-        userTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null) {
+        EasyBind.subscribe(userTable.getSelectionModel().selectedItemProperty(), v -> {
+            if (v == null) {
                 return;
             }
-            cardView.setImage(ImageCache.getImage(newValue.getImageUrl()));
+            cardView.setImage(ImageCache.getImage(v.getImageUrl()));
         });
     }
 

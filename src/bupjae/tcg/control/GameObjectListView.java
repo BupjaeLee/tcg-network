@@ -15,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.layout.StackPane;
 import javafx.util.StringConverter;
+import org.fxmisc.easybind.EasyBind;
 
 /**
  *
@@ -41,8 +42,8 @@ public class GameObjectListView extends StackPane {
         }));
         view.setFixedCellSize(24);
         view.setPrefWidth(500);
-        view.prefHeightProperty().bind(view.fixedCellSizeProperty().multiply(Bindings.min(list.sizeProperty().add(1), 10)));
-        view.focusModelProperty().get().focusedItemProperty().addListener((bean, oldValue, newValue) -> GameObjectTooltip.getInstance().setGameObject(newValue));
+        view.prefHeightProperty().bind(EasyBind.combine(view.fixedCellSizeProperty(), list.sizeProperty(), (h, n) -> h.doubleValue() * Math.min(n.intValue() + 1, 10)));
+        EasyBind.subscribe(view.focusModelProperty().get().focusedItemProperty(), v -> GameObjectTooltip.getInstance().setGameObject(v));
         setPadding(new Insets(15));
         getChildren().add(view);
     }

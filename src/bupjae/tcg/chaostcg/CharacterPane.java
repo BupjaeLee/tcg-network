@@ -5,17 +5,15 @@
  */
 package bupjae.tcg.chaostcg;
 
-import static javafx.beans.binding.Bindings.*;
-
 import bupjae.tcg.chaostcg.proto.ChaosTcgGameModel;
 import bupjae.tcg.common.ImageCache;
 import bupjae.tcg.common.proto.GameObject;
 import bupjae.tcg.control.GameObjectTooltip;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ListBinding;
-import javafx.beans.binding.NumberBinding;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -25,6 +23,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import org.fxmisc.easybind.EasyBind;
 
 /**
  *
@@ -32,14 +31,14 @@ import javafx.scene.layout.Pane;
  */
 public class CharacterPane extends Pane {
 
-    private static final double RATIO = 7.0 / 12.0;
+    private static final double RATIO_CHARACTER = 7.0 / 12.0;
+    private static final double DELTA_MODIFIER = 1.0 / 12.0;
     private static final String DOWNFACE_URL = CharacterPane.class.getResource("backface.png").toString();
 
     private final ObjectProperty<CharacterBean> character = new SimpleObjectProperty<>(this, "character", new CharacterBean());
 
-    private final NumberBinding effSize = min(widthProperty(), heightProperty().multiply(RATIO));
-    private final NumberBinding deltaY = effSize.divide(12.0);
-    private final NumberBinding midX2 = createDoubleBinding(() -> getLayoutBounds().getWidth() + getInsets().getLeft() - getInsets().getRight(), layoutBoundsProperty(), insetsProperty());
+    private final Binding<Double> effSize = EasyBind.combine(widthProperty(), heightProperty(), (w, h) -> Math.min(w.doubleValue(), h.doubleValue() * RATIO_CHARACTER));
+    private final Binding<Double> mid2 = EasyBind.combine(layoutBoundsProperty(), insetsProperty(), (l, i) -> l.getWidth() + i.getLeft() - i.getRight());
 
     private final ListBinding<GameObject> modifierImage = new ListBinding<GameObject>() {
         private ObservableList<GameObject> l;
@@ -72,29 +71,22 @@ public class CharacterPane extends Pane {
 
     public CharacterPane() {
         ImageView characterImage = addImageView();
-        characterImage.rotateProperty().bind(new DoubleBinding() {
-            private final ObjectBinding<ChaosTcgGameModel.Position> position;
-
-            {
-                bind(position = select(character, "position"));
-            }
-
-            @Override
-            protected double computeValue() {
-                ChaosTcgGameModel.Position p = position.get();
-                if (p == null) {
-                    return 0;
-                }
-                switch (p) {
-                    case REST:
-                        return 90;
-                    case REVERSE:
-                        return 180;
-                    default:
+        characterImage.rotateProperty().bind(EasyBind.map(
+                EasyBind.select(character).selectObject(CharacterBean::positionProperty),
+                p -> {
+                    if (p == null) {
                         return 0;
-                }
-            }
-        });
+                    }
+                    switch (p) {
+                        case REST:
+                            return 90;
+                        case REVERSE:
+                            return 180;
+                        default:
+                            return 0;
+                    }
+                }));
+
         characterImage.imageProperty().bind(new ObjectBinding<Image>() {
             private ObjectBinding<GameObject> t;
             private ObjectBinding<ChaosTcgGameModel.Face> f;
@@ -111,7 +103,7 @@ public class CharacterPane extends Pane {
                 if (f != null) {
                     unbind(f);
                 }
-                bind(t = valueAt(character.get().getCharacter(), 0), f = select(character, "face"));
+                bind(t = valueAt(character.get().getCharacter(), 0), f = Bindings.select(character, "face"));
                 invalidate();
             }
 
@@ -138,11 +130,12 @@ public class CharacterPane extends Pane {
 
     private ImageView addImageView() {
         ImageView ret = new ImageView();
+        int index = getChildren().size();
         ret.setPreserveRatio(true);
         ret.fitWidthProperty().bind(effSize);
         ret.fitHeightProperty().bind(effSize);
-        ret.layoutXProperty().bind(midX2.subtract(selectDouble(ret.layoutBoundsProperty(), "width")).divide(2));
-        ret.layoutYProperty().bind(deltaY.multiply(getChildren().size()).subtract(selectDouble(ret.layoutBoundsProperty(), "minY")));
+        ret.layoutXProperty().bind(EasyBind.combine(mid2, ret.layoutBoundsProperty(), (m, l) -> (m - l.getWidth()) / 2));
+        ret.layoutYProperty().bind(EasyBind.combine(effSize, ret.layoutBoundsProperty(), (s, b) -> s * DELTA_MODIFIER * index - b.getMinY()));
         Tooltip.install(ret, GameObjectTooltip.getInstance());
         getChildren().add(0, ret);
         return ret;

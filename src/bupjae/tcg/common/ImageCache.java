@@ -10,10 +10,10 @@ import bupjae.tcg.common.proto.GameObject;
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
+import javafx.beans.binding.Binding;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
+import org.fxmisc.easybind.EasyBind;
 
 /**
  *
@@ -39,9 +39,8 @@ public class ImageCache {
         return ret;
     }
 
-    public static ObjectBinding<Image> bind(ObservableValue<?> v) {
-        return Bindings.createObjectBinding(() -> {
-            Object obj = v.getValue();
+    public static Binding<Image> bind(ObservableValue<?> v) {
+        return EasyBind.map(v, obj -> {
             String url;
             if (obj instanceof GameObject) {
                 url = ((GameObject) obj).getInfo().getImageUrl();
@@ -51,6 +50,6 @@ public class ImageCache {
                 url = (obj == null ? "" : obj.toString());
             }
             return getImage(url);
-        }, v);
+        });
     }
 }
