@@ -82,14 +82,7 @@ public class BoardController implements Initializable {
     }
 
     public void setTestData() {
-        Board.Builder builder = Board.newBuilder();
-        try (InputStream is = BoardController.class.getResourceAsStream("testboard.txt");
-                Reader r = new InputStreamReader(is, "UTF-8")) {
-            com.google.protobuf.TextFormat.merge(r, dataManager.get().getRegistry(), builder);
-            myBoard.set(builder);
-        } catch (Exception ex) {
-            System.err.println(ex);
-        }
+        myBoard.set(dataManager.get().readTestData(BoardController.class.getResource("testboard.txt"), Board.newBuilder()));
     }
 
     @FXML

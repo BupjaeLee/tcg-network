@@ -5,18 +5,18 @@
  */
 package bupjae.tcg.common.data;
 
-import bupjae.tcg.common.MainController;
 import bupjae.tcg.common.proto.CardInfo;
 import bupjae.tcg.common.proto.CardInfoList;
 import bupjae.tcg.common.proto.Deck;
 import bupjae.tcg.common.proto.GameObject;
 import com.google.protobuf.ExtensionRegistry;
+import com.google.protobuf.Message;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -61,7 +61,7 @@ public class DataManager {
 
         public Builder load(String resource) {
             try {
-                CardInfoList.Builder s = readResource(registry, resource);
+                CardInfoList.Builder s = readTextInternal(registry, DataManager.class.getResource(resource), CardInfoList.newBuilder());
                 master.addAll(s.getInfoList());
                 s.getInfoList().stream().forEach(c -> {
                     masterLookup.put(c.getSerial(), c);
@@ -91,23 +91,22 @@ public class DataManager {
         return masterLookup.get(id);
     }
 
-    private static CardInfoList.Builder readResource(ExtensionRegistry registry, String resource) throws IOException {
-        try (InputStream is = MainController.class.getResourceAsStream(resource);
+    private static <T extends Message.Builder> T readTextInternal(ExtensionRegistry registry, URL url, T builder) throws IOException {
+        try (InputStream is = url.openStream();
                 Reader r = new InputStreamReader(is, "UTF-8")) {
-            CardInfoList.Builder builder = CardInfoList.newBuilder();
             com.google.protobuf.TextFormat.merge(r, registry, builder);
             return builder;
         }
     }
 
-    public ExtensionRegistry getRegistry() {
-        return registry;
+    private static <T extends Message.Builder> T readBinaryInternal(ExtensionRegistry registry, URL url, T builder) throws IOException {
+        try (InputStream is = url.openStream()) {
+            return (T) builder.mergeFrom(is, registry);
+        }
     }
 
     public void readDeck(File file) throws IOException {
-        try (FileInputStream fin = new FileInputStream(file)) {
-            deck.setDeck(Deck.newBuilder().mergeFrom(fin, registry));
-        }
+        deck.setDeck(readBinaryInternal(registry, file.toURI().toURL(), Deck.newBuilder()));
     }
 
     public ObservableList<CardInfo> getMaster() {
@@ -116,6 +115,14 @@ public class DataManager {
 
     public DeckWrapper getDeck() {
         return deck;
+    }
+    
+    public <T extends Message.Builder> T readTestData(URL url, T builder) {
+        try {
+            return readTextInternal(registry, url, builder);
+        } catch(IOException ex) {
+            throw new AssertionError("Reading test data failed", ex);
+        }
     }
 
     public List<GameObject> unpackDeck() {
